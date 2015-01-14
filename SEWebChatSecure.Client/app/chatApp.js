@@ -1,25 +1,16 @@
 var chatApp = angular.module('chatApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
 
-/*chatApp.config(function($httpProvider) {
-    //Enable cross domain calls
-    $httpProvider.defaults.useXDomain = true;
-
-    //Remove the header containing XMLHttpRequest used to identify ajax call
-    //that would prevent CORS from working
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-});*/
-
 chatApp.config(function ($routeProvider){
     $routeProvider.when('/chat', {
-        templateUrl: '/chat.html',
+        templateUrl: 'chat.html',
         controller: 'ChatCtrl'
         })
         .when('/login', {
-            templateUrl: '/login.html',
+            templateUrl: 'login.html',
             controller: 'LoginCtrl'
         })
         .when('/register', {
-            templateUrl: '/register.html',
+            templateUrl: 'register.html',
             controller: 'RegisterCtrl'
         })
         .otherwise({
@@ -33,12 +24,19 @@ chatApp.config(function ($routeProvider){
 });*/
 
 chatApp.config(function ($httpProvider) {
+    //Enable cross domain calls
+    $httpProvider.defaults.useXDomain = true;
+
+    //Remove the header containing XMLHttpRequest used to identify ajax call
+    //that would prevent CORS from working
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
     $httpProvider.interceptors.push('authInterceptorService');
 });
 
-chatApp.run(['authService', function (authService) {
+chatApp.run(function (authService) {
     authService.fillAuthData();
-}]);
+});
 
 //Directive for entering chat message
 chatApp.directive('ngEnter', function() {

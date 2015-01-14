@@ -1,5 +1,5 @@
 'use strict';
-chatApp.controller('RegisterCtrl', ['$scope', '$location', '$timeout', 'authService', function ($scope, $location, $timeout, authService) {
+chatApp.controller('RegisterCtrl', function ($scope, $location, $timeout, authService) {
 
     $scope.savedSuccessfully = false;
     $scope.message = "";
@@ -25,7 +25,7 @@ chatApp.controller('RegisterCtrl', ['$scope', '$location', '$timeout', 'authServ
                         errors.push(response.data.modelState[key][i]);
                     }
                 }
-                $scope.message = "Failed to register user due to:" + errors.join(' ');
+                $scope.message = "Failed to register - " + errors.join(' ');
             });
     };
 
@@ -34,5 +34,5 @@ chatApp.controller('RegisterCtrl', ['$scope', '$location', '$timeout', 'authServ
             $timeout.cancel(timer);
             $location.path('/login');
         }, 2000);
-    }
-}]);
+    };
+});

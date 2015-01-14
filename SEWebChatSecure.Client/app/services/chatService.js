@@ -1,8 +1,9 @@
 //ChatService
-chatApp.factory('ChatService', ['$http', function($http){
+chatApp.factory('ChatService', function($http){
     var srv = {};
 
     srv._baseUrl = 'http://sewebchat-secureapi.azurewebsites.net';
+    //srv._baseUrl = 'http://localhost:50256';
 
     srv.getChatHistory = function(){
         return $http.get(srv._baseUrl + '/api/Chat/');
@@ -21,4 +22,4 @@ chatApp.factory('ChatService', ['$http', function($http){
             return srv.sendMessage(message);
         }
     };
-}]);
+});

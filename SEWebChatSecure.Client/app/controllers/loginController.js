@@ -1,5 +1,5 @@
 'use strict';
-chatApp.controller('LoginCtrl', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+chatApp.controller('LoginCtrl', function ($scope, $location, authService) {
 
     $scope.loginData = {
         userName: "",
@@ -17,4 +17,4 @@ chatApp.controller('LoginCtrl', ['$scope', '$location', 'authService', function 
                 $scope.message = err.error_description;
             });
     };
-}]);
+});

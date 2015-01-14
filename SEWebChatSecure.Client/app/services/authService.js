@@ -1,7 +1,8 @@
 'use strict';
-chatApp.factory('authService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
+chatApp.factory('authService', function ($http, $q, localStorageService) {
 
     var serviceBase = 'http://sewebchat-secureapi.azurewebsites.net/';
+    //var serviceBase = 'http://localhost:50256/';
     var authServiceFactory = {};
 
     var _authentication = {
@@ -13,7 +14,7 @@ chatApp.factory('authService', ['$http', '$q', 'localStorageService', function (
 
         _logOut();
 
-        return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
+        return $http.post(serviceBase + 'api/User', registration).then(function (response) {
             return response;
         });
 
@@ -60,7 +61,7 @@ chatApp.factory('authService', ['$http', '$q', 'localStorageService', function (
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
         }
-    }
+    };
 
     authServiceFactory.saveRegistration = _saveRegistration;
     authServiceFactory.login = _login;
@@ -69,4 +70,4 @@ chatApp.factory('authService', ['$http', '$q', 'localStorageService', function (
     authServiceFactory.authentication = _authentication;
 
     return authServiceFactory;
-}]);
+});

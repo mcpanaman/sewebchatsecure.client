@@ -1,18 +1,21 @@
-'use strict';
-chatApp.controller('ChatCtrl', function($scope, $interval, $location, UserService, ChatService) {
+'use-strict'
+chatApp.controller('ChatCtrl', function($scope, $interval, $location, $timeout, authService, UserService, ChatService) {
+
+    $scope.loggedInUsername = authService.authentication.userName;
 
     //Initial Load of ActiveUsers
-    /*UserService.getActiveUsers().then(function(res){
+    UserService.getActiveUsers().then(function(res){
         $scope.onlineUsers = res.data;
     }, function(error){
         console.log('error during getactiveUsers');
-    });*/
+    });
 
     //Initial Loading ChatHistory
-    ChatService.getChatHistory().then(function(res){
+    ChatService.getChatHistory().then(function(res) {
         $scope.messages = res.data;
         $scope.apply();
-
+    }, function(error){
+            console.log('error during getChatHistory');
     });
 
     //Put in interval, first trigger after 3 seconds
@@ -20,13 +23,14 @@ chatApp.controller('ChatCtrl', function($scope, $interval, $location, UserServic
         ChatService.getChatHistory().then(function(res) {
             $scope.messages = res.data;
             $scope.apply();
-
+        }, function(error){
+            console.log('error during getChatHistory');
         });
     }, 3000);
     $scope.$on('$destroy', function () { $interval.cancel(intervalPromiseHist); });
 
     //Put in interval, first trigger after 5 seconds
-    /*var intervalPromiseAct = $interval(function(){
+    var intervalPromiseAct = $interval(function(){
         UserService.getActiveUsers().then(function(res){
             $scope.onlineUsers = res.data;
             $scope.apply();
@@ -34,7 +38,7 @@ chatApp.controller('ChatCtrl', function($scope, $interval, $location, UserServic
             console.log('error during getactiveUsers');
         });
     }.bind(this), 10000);
-    $scope.$on('$destroy', function () { $interval.cancel(intervalPromiseAct); });*/
+    $scope.$on('$destroy', function () { $interval.cancel(intervalPromiseAct); });
 
     //SendMessage
     $scope.sendMessage = function() {
@@ -49,6 +53,7 @@ chatApp.controller('ChatCtrl', function($scope, $interval, $location, UserServic
 
     //Logout
     $scope.logout = function() {
+        authService.logOut();
         $scope.loggedInUsername = null;
         $location.path('/login');
     };
