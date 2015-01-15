@@ -1,7 +1,7 @@
 chatApp.factory('UserService', function($http){
     var srv = {};
 
-    srv._baseUrl = 'http://sewebchat.azurewebsites.net';
+    srv._baseUrl = 'http://sewebchat-secureapi.azurewebsites.net';
     //srv._baseUrl = 'http://localhost:50256';
 
     srv.getActiveUsers = function(){
